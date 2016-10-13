@@ -1,0 +1,74 @@
+<!-- 
+Ordine isturzioni ononè quello di esecuzione 
+Compare prima la frase nel log mentre il file continua a caricarsi
+
+qualsiasi azione sul data set va inserita nella funzione che lo carica altrimenti le esegue prima che ci siano i dati e restituisce errore
+
+-->
+
+<html>
+    <head>
+        <script src="d3.v3.min.js">
+        </script>
+    </head>
+    
+    <body>
+        <svg height="15000" width="15000">
+        </svg>
+        
+        <script>
+            d3.csv('athletes_sochi.csv', function(data){
+                console.log(data)
+                
+                
+            
+                d3.select('svg')
+                    /* Prepara una lista variabile di rect da associare agli oggetti in data e associane uno ad ogni record 
+                    creo una relazione tra un array di oggetti e una losta di rettangoli */
+                    .selectAll('rect')
+                    .data(data)
+                    .enter()
+                    .append('rect')
+                    /* ampiezza pari all'età */
+                    .attr('width',5)
+                    .attr('height',function(d,i){
+                        return d.age
+                        })
+                    /* funzione per spostare l'ordinata di ogni rettangolo
+                    i è l'indice di ogni record sul data set (0,1,2,3,...)
+                    */
+                    .attr('x', function(d,i){
+                        return i*6    
+                        })
+                    .attr('y', function(d,i){
+                        return 100-d.age    
+                        })
+                
+                
+                d3.select('svg')
+                    /* Prepara una lista variabile di rect da associare agli oggetti in data e associane uno ad ogni record 
+                    creo una relazione tra un array di oggetti e una lista di rettangoli */
+                    .selectAll('circle')
+                    .data(data)
+                    .enter()
+                    .append('circle')
+                    .attr('r',function(d,i){
+                        return 3
+                        })
+                    .attr('cx',function(d,i){
+                        return d.weight * 2
+                        })
+                    .attr('cy',function(d,i){
+                        return d.height * 100
+                        })
+                    .attr('opacity',.1)
+                    
+                              })
+            
+            
+            /* console.log('File Caricato!') */
+        
+               
+        </script>
+    </body>
+</html>

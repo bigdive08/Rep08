@@ -1,0 +1,76 @@
+<html>
+    
+    <head>
+        
+    <style>
+        /*
+            commento
+        */
+        svg{
+            border:5px solid red;
+        }
+        
+        h1{
+            color:orange;
+        }
+        
+        
+        rect{
+            fill: blue
+        }
+        
+        /*
+        svg rect{
+               fill: blue
+        }
+        
+        In questo modo coloro solamente il rettangoli all'interno di un svg        
+        */
+        
+        #miotitolo{
+            color:red
+        }
+        
+        .Altri_Titoli{
+            color:green
+        }
+        
+    </style>
+        
+    </head>
+    
+    <body>
+        
+        <!-- Questo è un commento -->
+        <!-- 
+            fill="green" oppure style = "fill:purple;" nel rettangolo, ma se ci sono delle impostazioni in <head> prevalgono quelle
+        -->
+        
+        <h1>Titolo 1</h1>
+        <h1 id = "MioTitolo">Titolo 2</h1>
+        <h2 class = "Altri_Titoli">Titolo 3</h2>
+        <h2 class = "Altri_Titoli">Titolo 4</h2>
+        
+        <svg>
+            
+            <rect fill="green" style = "fill:purple" width = "20" 
+                  height = "20">
+            </rect>
+            
+            <circle r="5" 
+                    cx="100" cy="50">
+            </circle>
+            
+            <text x="50" y="50">testo</text>
+            
+            <g transform="translate(100,90)">   
+            
+                <circle fill="red" r="5" cx="100" cy="50"></circle>
+                        
+            </g>
+                    
+        </svg>
+        
+    </body>
+
+</html>

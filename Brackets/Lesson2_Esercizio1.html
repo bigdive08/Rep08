@@ -1,0 +1,170 @@
+<html>
+    
+    <head>
+    <h1> Esercizio 1 </h1>
+        <script src="d3.v3.min.js">
+        </script>
+        
+    </head>
+
+    <body>
+         
+        <svg id="MySvg" width="500" height="130">
+        </svg>
+        
+        <!-- 
+
+        Se creo più svg devo poi richiarli tramite ID
+        d3.select('#MySvg')
+            .append() ecc...
+        Comodo per modificarne dimensioni e posizione nel passaggio da desktop a mobile, per esempio.
+
+        Se lavoro con un unico svg, il modo per posizione oggetti uno sotto l'altro è impostare l'ordinata dei nuovi oggetti
+
+        il tutto rimane all'interno di un unico script
+        -->
+        
+        <script>
+            
+            d3.select('svg')
+                .attr('width',600)
+                .attr('height',150)
+            
+            d3.select('svg')
+                .append ('rect')
+                .attr('width', 40)
+                .attr('height',80)
+                .attr ('y',30)
+            
+            d3.select('svg')
+                .append ('rect')
+                .attr('width', 40)
+                .attr('height',50)
+                .attr ('x',45)
+                .attr('y',60)
+                .attr('fill','orange')
+            
+            /* Registrazione di un evento */
+            /* Callback funzioni anonime scritte direttamente nel contesto in cui servono. Il codice non viene eseguito fnchè non si realizza il click */
+            
+                .on('click',function(){
+                    console.log('Il Click è stato registrato!')
+                    
+                    d3.select(this)
+                        .transition()
+                        .duration(2000)
+                        .attr('fill','purple')
+                    })
+              
+            d3.select('svg')    
+                .append ('rect')
+                .attr('width', 40)
+                .attr('height',100)
+                .attr ('y',10)
+                .attr ('x',90)
+                .attr('fill','blue')
+            
+            d3.select('svg')
+                .append ('rect')
+                .attr('width', 40)
+                .attr('height',0)
+                .attr ('y',30)
+                .attr('x',135)
+                .transition()
+                .duration(2000)
+                .attr('height',80)
+                .attr('fill','lightblue')
+            
+              d3.select('svg')
+                .append ('rect')
+                .attr('width', 40)
+                .attr('height',0)
+                .attr ('y',110)
+                .attr('x',180)
+                .transition()
+                .duration(2000)
+                .delay(1000)
+                .attr('y',20)
+                .attr('height',90)
+                .attr('fill','pink')
+              
+              /* .ease dà effetti alla transizione. Verificare quali effetti sono previsti */
+              
+               d3.select('svg')
+                .append ('rect')
+                .attr('width', 40)
+                .attr('height',0)
+                .attr ('y',110)
+                .attr('x',225)
+                .transition()
+                .duration(2000)
+                .delay(1000)
+                .ease('bounce')
+                .attr('y',10)
+                .attr('height',100)
+                .attr('fill','yellow')
+                .attr('stroke','orange') /* bordo*/
+                .attr('stroke-width',4) /* spessore del borso*/
+               
+               /*dichiarando una variabile con var, si può successivamente richiamare come var.on oppure var.transition */
+               
+    var MyRect = d3.select('svg')
+                .append ('rect')
+                .attr('width', 40)
+                .attr('height',0)
+                .attr ('y',110)
+                .attr('x',270)
+    
+          MyRect.transition()
+                .duration(2000)
+                .delay(1000)
+                .attr('y',20)
+                .attr('height',90)
+          
+          MyRect.on('click',function(){
+                    console.log('Il Click è stato registrato!')
+                    
+                    d3.select(this)
+                        .transition()
+                        .duration(2000)
+                        .attr('fill','lightgreen')
+                    })
+            /*altre azioni sono 
+            - mouseenter
+            - mouseleave
+            - mouseup primo click
+            - mousedown click in rilascio
+            */
+          
+           d3.select('svg')
+                .append ('rect')
+                .attr('width', 40)
+                .attr('height',50)
+                .attr ('x',315)
+                .attr('y',60)
+                .attr('fill','orange')
+                .on('mousedown',function(){
+                d3.select(this)
+                .attr('fill','blue')
+                })
+                .on('mouseup',function(){
+                d3.select(this)
+                .attr('fill','red')
+                })
+                                              
+        </script>
+      
+        <h1> Esercizio 2 </h1>
+        
+        <svg>
+        </svg>
+        
+            <script>
+        
+        
+            </script>
+        
+        
+    </body>
+
+</html>

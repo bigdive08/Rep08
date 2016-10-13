@@ -1,0 +1,62 @@
+<!-- 
+Ordine isturzioni ononè quello di esecuzione 
+Compare prima la frase nel log mentre il file continua a caricarsi
+
+qualsiasi azione sul data set va inserita nella funzione che lo carica altrimenti le esegue prima che ci siano i dati e restituisce errore
+
+-->
+
+<html>
+    <head>
+        <script src="d3.v3.min.js">
+        </script>
+    </head>
+    
+    <body>
+        <svg height="15000" width="15000">
+        </svg>
+        
+        <script>
+            d3.csv('athletes_sochi.csv', function(data){
+                console.log(data)
+                                
+                var rects = d3.select('svg')
+                   
+                    .selectAll('rect')
+                    .data(data)
+                    .enter()
+                    .append('rect')
+                    
+                    .attr('width',5)
+                    .attr('height',function(d,i){
+                          return d.age
+                          })
+                    .attr('x', function(d,i){
+                        return i*6    
+                        })                    
+                    .attr('y', function(d,i){
+                        return 100-d.age    
+                        })
+
+                /* Condizioni per pulire il dataset lo arrichiscono di altre variabili */
+                rects.on('click', function(d,i){
+                                        
+                        if (d.clicked){
+                           d3.select(this)
+                           .attr('fill','black')
+                           d.clicked=false
+                           }
+                        else { 
+                            d3.select(this)
+                           .attr('fill','red')
+                           d.clicked=true
+                        }  
+               })                        
+                
+                
+               })
+        
+               
+        </script>
+    </body>
+</html>
