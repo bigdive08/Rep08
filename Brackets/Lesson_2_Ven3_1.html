@@ -1,0 +1,110 @@
+<html>
+    <head>
+        <script src='d3.v3.min.js'></script>
+    </head>
+    
+    <body>
+        <svg></svg>
+        
+        <script>
+            
+            d3.csv('athletes_sochi.csv', function(data){
+            
+                var byAge = d3.nest()
+                    .key(function(d,i){
+                    return d.age
+                })
+                //.sortKeys(d3.ascending)
+                .entries(data)
+            
+                    
+            byAge.sort(function(a, b){
+                return d3.ascending(parseInt(a.key), parseInt(b.key))
+            })
+            
+              var min = d3.min(byAge, function(d, i){
+                    return d.key
+                })
+                
+                
+                var max = d3.max(byAge, function(d, i){
+                    return d.key
+                })
+                
+                var MaxRad = d3.max(byAge, function(d, i){
+                    return d.values.length
+                }) 
+                
+                var CenterX = 300 / byAge.length
+                
+                console.log(min, max, CenterX, MaxRad)
+                
+                var MyRadScale = d3.scale.linear()
+                    .domain([0,MaxRad])    /* Variabile*/
+                    .range([0,150 / 4.5])  /*  Pixel */
+            
+            
+            d3.select('svg')
+                .selectAll('circle')
+                .data(byAge)
+                .enter()
+                .append('circle')
+                .attr('r', function(d,i){
+                    return MyRadScale(d.values.length)
+                })                
+                .attr('cx', function(d, i){
+                    return i * CenterX 
+                })
+                .attr('cy', 50)
+                .attr('opacity',.2)
+             
+            d3.select('svg')
+                .selectAll('text')
+                .data(byAge)
+                .enter()
+                .append('text')
+                .text(function(d,i){
+                    return d.key
+                })                
+                .attr('x', function(d, i){
+                    return i * CenterX
+                })
+                .attr('y', 15)
+                .attr('font-size',8)
+                .attr('text-anchor','middle')
+                .attr('opacity',1) 
+            
+            
+            /*
+            d3.select('svg')
+                .selectAll('text')
+                .data(byAge)
+                .enter()
+                .append('text')
+                .text(function(d,i){
+                    return d.values[11]
+                })                
+                .attr('y',100)
+                    .attr('x',function(d, i){
+                        return (i + 2) * 40 
+                    })
+                .attr('text-anchor','middle')
+                .attr('opacity',1)
+            */
+            
+        
+            
+            
+            
+            
+            
+            
+            })
+            
+            
+            
+            
+        
+        </script>
+    </body>
+</html>

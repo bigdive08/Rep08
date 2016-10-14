@@ -1,0 +1,159 @@
+<html>
+    <head>
+        <script src='d3.v3.min.js'></script>
+    </head>
+    
+    <body>
+        <svg width="15000">
+            
+              <line x1="15" x2="300" y1="150" y2="150" stroke="black">
+              </line>
+                  
+              <line x1="15" x2="15" y1="150" y2="10" stroke="black" stroke-width = .5>
+              </line>
+            
+              <text x="25" y="12" font-size = "10">Ordinata</text>
+            <text x="310" y="150" font-size = "10">Ascissa
+            </text>
+        </svg>
+        <script>
+            var dataset = [3, 67, 6, 8, 23, 56, 8, 23, 5]
+            
+            
+            /*
+            d3.select('svg')
+                .selectAll('rect')
+                .data(dataset)
+                .enter()
+                .append('rect')
+                .attr('width',25)
+                .attr('height', function(d,i){
+                    return d
+                })
+                .attr('x', function(d,i){
+                    return i * 26
+                })
+                .attr('y', function(d,i){
+                      return 100 - d
+                })
+            
+             inserire caselle di testo per ogni colonne dell'istogramma, ma questo modo appesantisce il codice: 
+            
+            d3.select('svg')
+                .selectAll('text')
+                .data(dataset)
+                .enter()
+                .append('text')
+                .text(function (d,i){
+                    return d
+                })
+                .attr('width',25)
+                .attr('x', function(d,i){
+                    return i * 26
+                })
+                .attr('y', function(d,i){
+                      return 100 - d
+                })
+            
+            Meglio utilizzare i gruppi (vedi di seguito)
+            Si utilizza una variabile che referenzi il gruppo (la lista di gruppi) e si usa la variabile per appendere i rect e i text
+            */
+        
+            /*
+            var MyGroups = d3.select('svg')
+                .selectAll('g')
+                .data(dataset)
+                .enter()
+                .append('g')
+                .attr('transform', function(d,i){
+                    return 'translate(' + i * 21 + ',0)'
+                })
+            
+            MyGroups.append('rect')
+                .attr('width', 20)
+                .attr('height', function(d,i){
+                    return d
+                })
+                .attr('y', function(d,i){
+                      return 100 - d
+                })
+                
+            
+            MyGroups.append('text')
+                .text(function(d,i){
+                    return d
+                })
+                .attr('x',2.5)
+                .attr('y',15)
+            
+            */
+            
+        /* Esercizio scatterplot */    
+            
+        
+            
+            var MyScatterplot = d3.select('svg')
+                .selectAll('g')
+                .data(dataset)
+                .enter()
+                .append('g')
+                .attr('transform', function(d,i){
+                    return 'translate(' + (i+1) * 30 + ',0)'
+                })
+               
+            
+            MyScatterplot.append('circle')
+                .attr('r', 0)
+                /*.attr('cx', function(d,i){
+                      return (i+1) * 10
+                })*/
+                .attr('cy', function(d,i){
+                      return 120 - d
+                })
+                .transition()
+                .duration(2000)
+                .delay(function(d,i){
+                    return 300 * i
+                })
+                .attr('r', 5)
+                
+            
+            MyScatterplot.append('text')
+                .text(function(d,i){
+                     return d
+                })
+                .attr('y',function(d,i){
+                    return 110 - d
+                })
+                .attr('text-anchor','middle')
+                .attr('opacity',0)
+            
+            MyScatterplot.on('mouseenter',function(){
+                d3.select(this)
+                    .select('text')
+                    .attr('opacity', 1)
+                d3.select(this)
+                    .select('circle')
+                    .attr('r',7)
+                    .attr('fill','red')
+                })
+            
+            MyScatterplot.on('mouseleave',function(){
+                d3.select(this)
+                    .select('text')
+                    .attr('opacity',0)
+                d3.select(this)
+                    .select('circle')
+                    .attr('r',5)
+                    .attr('fill','black')
+                })
+            
+            
+        
+        </script>
+
+        
+    </body>
+
+    
+</html>

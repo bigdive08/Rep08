@@ -1,0 +1,116 @@
+<html>
+    <head>
+        <script src='d3.v3.min.js'></script>
+    </head>
+    
+    <body>
+        <svg></svg>
+        
+        <script>
+            
+            d3.csv('athletes_sochi.csv', function(data){
+            
+            /* a e b rappresentano 2 elementi di una lsta di variabili, 2 record di un data set.Se voglio ordinarli, devo specificare la variabili secondo la quale ordinarli */
+                
+            data.sort(function(a,b){
+                return d3.descending (a.age,b.age)
+            })
+            
+            
+            var DataFilter = data.filter(function(d){
+                return (d.sport == "Ice Hockey" && parseInt(d.age) > 40)
+            })
+            /*
+             console.log(data)
+             console.log(DataFilter)
+            */    
+            
+            
+            var MyBars = d3.select('svg')
+                .selectAll('g')
+                .data(DataFilter)
+                .enter()
+                .append('g')
+                .attr('transform', function(d,i){
+                    return 'translate(' + i * 20+ ',0)'
+                })
+            
+            MyBars.append('rect')
+                .attr('width', 15)
+                .attr('height', function(d,i){
+                    return d.age
+                })
+                .attr('x', function(d,i){
+                        return i
+                        })  
+                .attr('y', function(d,i){
+                      return 100 - d.age
+                })
+            
+            MyBars.append('text')
+                .text(function(d,i){
+                    return d.age
+                })
+                .attr('x',2.5)
+                .attr('y',15)
+                .attr('text-anchor','middle')
+                .attr('opacity',1)
+            
+             var Country = MyBars.append('text')
+                    .text(function(d,i){
+                    return d.country
+                })
+                .attr('x',2.5)
+                .attr('y',120)
+                .attr('text-anchor','middle')
+                .attr('opacity',0)
+            
+              MyBars.on('mouseenter',function(){
+                d3.select(this)
+                    .select(Country)
+                    .attr('opacity', 1)
+                d3.select(this)
+                    .select('rect')
+                    .attr('fill','red')
+                })
+            
+            MyBars.on('mouseleave',function(){
+                d3.select(this)
+                    .select('text')
+                    .attr('opacity',0)
+                d3.select(this)
+                    .select('rect')
+                    .attr('fill','black')
+                })
+            /*
+            
+                var rects = d3.select('svg')
+                   
+                    .selectAll('rect')
+                    .data(DataFilter)
+                    .enter()
+                    .append('rect')
+                    
+                    .attr('width',15)
+                    .attr('height',function(d,i){
+                          return d.age
+                          })
+                    .attr('x', function(d,i){
+                        return i*16
+                        })                    
+                    .attr('y', function(d,i){
+                        return 100-d.age    
+                        })*/
+    
+        })
+            
+            
+            
+            
+            
+        </script>
+    
+    </body>
+
+</html>
+            
