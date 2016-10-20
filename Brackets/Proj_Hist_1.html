@@ -54,7 +54,7 @@
                 .enter()
                 .append('g')
                 .attr('transform', function(d,i){
-                    return 'translate(' + (i+1) * 20 + ',0)'
+                    return 'translate(' + (i+1) * 75 + ',0)'
                 })
             
              var color = d3.scale.category20()
@@ -83,14 +83,15 @@
 //                .attr('fill','lightblue')
 //             
 //            
-//            MyCountryPlot.append('text')
-//                .text(function(d,i){
-//                     return d.key
-//                })
-//                .attr('y',10)
-//                .attr('text-anchor','middle')
-//                .attr('font-size',10)
-//            
+            MyCountryPlot.append('text')
+                .text(function(d,i){
+                     return d.key
+                })
+                .attr('y',120)
+                .attr('text-anchor','middle')
+                .attr('font-size',10)
+          
+        
 //            
 //             MyCountryPlot.append('text')
 //                .text(function(d,i){
