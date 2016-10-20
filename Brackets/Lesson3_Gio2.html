@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <script src='d3.v3.min.js'></script>
+    </head>
+
+    <body>
+        <svg></svg>
+        
+        <script>
+            
+            var mapX = d3.scale.linear()
+                .domain([0,20])
+                .range([0,300])
+            
+            
+             var mapD = d3.scale.linear()
+                .domain([0,1])
+                .range([0,100])
+             
+             
+            /*
+            var genline = d3.svg.line()
+                            .x(function(d, i){
+                                return i * 10
+                            })
+                            .y(function(d, i){
+                                return d
+                            })
+                            .interpolate('basis')
+                            */
+            // restituisce una curva
+
+            //y1 e la coordinata standard
+            //y0 è la costante che chiude l'area
+            //da disegnare
+            var genline = d3.svg.area()
+                            .x(function(d, i){
+                                return mapX(i) /*i * 10*/
+                            })
+                            .y1(function(d, i){
+                                return mapD(d)
+                            })
+                            .y0(function(d, i){
+                                return 150
+                            })
+                            .interpolate('basis')
+            
+            var myPath = d3.select('svg')
+                            .append('path')
+                            
+            
+            
+            function draw(data){
+            
+                myPath.attr('d', genline(data))
+                //.attr('fill', 'none') funziona con line
+                //.attr('stroke', 'purple') funziona con line, non con area
+                
+            }
+            
+            
+            
+            d3.select('svg').on('click',function(){
+                
+                 var data = d3.range(20).map(function(){
+                    return Math.random()
+                    
+                })
+                
+                draw(data)
+            })
+            
+            
+        
+        </script>
+    </body>
+</html>

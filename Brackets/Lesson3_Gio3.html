@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <script src='d3.v3.min.js'></script>
+    </head>
+
+    <body>
+        <svg></svg>
+        
+        <script>
+            
+            var myArc = d3.svg.arc()
+                .innerRadius(function(d){
+                    return 65
+                    //return Math.random()*100
+                })
+                .outerRadius(function(d){
+                    return 75
+                })
+            
+            var data = d3.range(10).map(function(){
+                return Math.random()
+            })
+            
+            //    .startAngle(function(d){
+            //        return 0
+            //    })
+            //    .endAngle(function(d){
+            //        return Math.PI
+            //    })
+            
+            var myPie = d3.layout.pie()
+                .value(function(d, i){
+                    return d
+                })
+            console.log(data)
+            console.log(myPie(data))
+            
+            var color = d3.scale.category20()
+            
+            d3.select('svg')
+                .append('g')
+                .attr('transform','translate(150,75)')
+                .selectAll('path')
+                .data(myPie(data))
+                .enter()
+                .append('path')
+                .attr('d',function(d,i){
+                    return myArc(d)
+                })
+                .attr('fill', function(d, i){
+                    return color(i)
+                })
+            
+            
+        
+        </script>
+    </body>
+</html>
