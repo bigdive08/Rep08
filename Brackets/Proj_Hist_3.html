@@ -4,7 +4,7 @@
     </head>
     
     <body>
-        <p>Età media</p>
+        <p>Peso Medio</p>
         
         <svg width = "1500" height = "200">
         
@@ -32,7 +32,7 @@
                 
                 function weight(arr){
                     var media = d3.mean(arr, function(d, i){
-                        return d.weight           
+                        return (d.weight > 0) ? d.weight  : d.values.remove()          
                     })
                     return media
                 }
@@ -48,7 +48,12 @@
                     }
                 })
                 //.sortKeys(d3.ascending)
-                .entries(data)
+                .entries(data)alm
+                
+                
+                
+    
+                
                 
             console.log(newdata)
            
@@ -67,10 +72,11 @@
              MyCountryPlot.append('rect')
                 .attr('width', 10)
                 .attr('height', function(d,i){
-                      return d.values.height * 50
+                      return (d.values.weight) 
                 })
                 .attr('y', function(d,i){
-                      return 100 - d.values.height * 50
+                      return 90 - d.values.weight
+                      
                 })
                 .attr('fill', function(d, i){
                     return color(i)
@@ -79,15 +85,14 @@
              
               MyCountryPlot.append('text')
                 .text(function(d,i){
-                      return parseFloat(d.values.height).toFixed(2)
+                      return parseFloat(d.values.weight).toFixed(2)
                 })
                 .attr('y', function(d, i){
-                    return 10 - d.values.height
+                    return 10 - d.values.weight
                 })
                 .attr('text-anchor','middle')
                 .attr('font-size',8)
               
-             
               
              MyCountryPlot.append('g')
                 .attr('transform', 'translate(0, 130) rotate(-45)')
@@ -98,37 +103,6 @@
                 .attr('text-anchor','middle')
                 .attr('font-size',10)
             
-             
-              //
-              //
-              //
-              //
-             
-             
-             var MyCountryPlot2 = d3.select('svg')
-                .selectAll('g')
-                .data(newdata)
-                .enter()
-                .append('g')
-                .attr('transform', function(d,i){
-                    return 'translate(' + (i+.5) * 75 + ',200)'
-                })
-            
-             var color = d3.scale.category20()
-             
-             MyCountryPlot2.append('rect')
-                .attr('width', 10)
-                .attr('height', function(d,i){
-                      return d.values.weight 
-                })
-                .attr('y', function(d,i){
-                      return 200 - d.values.weight 
-                })
-                .attr('fill', function(d, i){
-                    return color(i)
-                })
-             
-             
 //                .attr('transform', function(d,i){
 //                    return 'translate(' + (i+1) * 75 + ',0)'
 //                })
