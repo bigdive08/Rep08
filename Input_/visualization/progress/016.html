@@ -1,0 +1,92 @@
+<html>
+
+    <head>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        
+        <style>
+            .axis line, .axis path{
+                fill:none;
+                stroke:red;
+            }
+        </style>
+    </head>
+
+    <body>
+        <svg>
+            
+        </svg>
+        
+        <script>
+        
+            var axg = d3.select('svg')
+                .append('g')
+                .attr('class', 'axis')
+                .attr('transform', 'translate(0,100)')
+            
+            function draw(data){
+            
+                var circle = d3.select('svg')
+                    .selectAll('circle')
+                    .data(data)
+                
+                var mapX = d3.scale.linear()
+                    .domain([0, data.length])
+                    .range([20, 280])
+                
+                var ax = d3.svg.axis()
+                    .orient('bottom')
+                    .scale(mapX)
+                
+                
+                axg.transition()
+                    .call(ax)
+                
+                // enter block
+                circle.enter()
+                    .append('circle')
+                    .attr('cx', 0)
+                    .attr('cy', 40)
+                    .attr('r', 0)
+                    .attr('stroke', 'green')
+                    
+                 // exit block
+                 circle.exit()
+                    .transition()
+                    .attr('cy', 0)
+                    .remove()
+                    
+                 // update block
+                 circle.transition()
+                    .duration(2000)
+                    .delay(function(d, i){
+                        return i*100
+                    })
+                    .attr('r', function(d, i){
+                        return d*10
+                    })
+                    .attr('cx', function(d, i){
+                        return mapX(i)
+                    })
+            
+            }
+            
+            
+            
+            d3.select('svg')
+                .on('click', function(){
+                    
+                    var l = parseInt(Math.random()*20) + 3
+                    console.log(l)
+                    var data = d3.range(l).map(function(){
+                        return Math.random()  
+                    })
+                    
+                    draw(data)
+                })
+        
+        </script>
+    
+    </body>
+    
+    
+</html>

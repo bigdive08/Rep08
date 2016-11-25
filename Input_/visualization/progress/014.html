@@ -1,0 +1,82 @@
+<html>
+
+    <head>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+    </head>
+    
+    <body>
+    
+        <svg width="1000"></svg>
+        
+        
+        <script>
+        
+            d3.csv('athletes_sochi.csv', function(data){
+                
+                
+                function maleSum(arr){
+                    var somma = d3.sum(arr, function(d, i){
+                        return (d.gender == 'Male') ? 1 : 0 
+                    })
+                    return somma
+                }
+                
+                function femaleSum(arr){
+                    var somma = d3.sum(arr, function(d, i){
+                        return (d.gender == 'Female') ? 1 : 0 
+                    })
+                    return somma
+                }
+              
+                var newdata = d3.nest()
+                    .key(function(d){
+                        return d.country
+                    })
+                    .rollup(function(d){
+                        return{
+                            male: maleSum(d),
+                            female: femaleSum(d)
+                        }
+                    })
+                    .entries(data)
+                
+                console.log(newdata)
+                
+                
+                var groups = d3.select('svg')
+                    .selectAll('g')
+                    .data(newdata)
+                    .enter()
+                    .append('g')
+                    .attr('transform', function(d, i){
+                        return 'translate(' + i*10 + ',0)'
+                    })
+                
+                groups.append('rect')
+                    .attr('width', 4)
+                    .attr('height', function(d, i){
+                        return d.values.female
+                    })
+                    .attr('fill', 'pink')
+                    .attr('x', 4)
+                    .attr('y', function(d, i){
+                        return 150 - d.values.female
+                    })
+                
+                groups.append('rect')
+                    .attr('width', 4)
+                    .attr('height', function(d, i){
+                        return d.values.male
+                    })
+                    .attr('fill', 'steelblue')
+                    .attr('y', function(d, i){
+                        return 150 - d.values.male
+                    })
+                
+            })
+        
+        
+        </script>
+    </body>
+
+</html>

@@ -1,0 +1,55 @@
+<html>
+
+    <head>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+    </head>
+    
+    <body>
+        <svg></svg>
+        
+        
+        <script>
+            
+            var dataset = [3, 67, 6, 8, 23, 56, 8, 23, 5]
+            //var dataset = [{a:3}, {a:56}, {a:56}, {a:90}]
+            
+            var myGroups = d3.select('svg')
+                .selectAll('g')
+                .data(dataset)
+                .enter()
+                .append('g')
+                .attr('transform', function(d, i){
+                    return 'translate(' + i*21 + ',' + d + ')'   
+                })
+                
+            myGroups.append('circle')
+                .attr('r', 0)
+                .transition()
+                .duration(2000)
+                .delay(function(d, i){
+                    return 100*i
+                })
+                .attr('r', 5)
+                
+            
+            myGroups.append('text')
+                .text(function(d, i){
+                    return d
+                })
+                .attr('y', 20)
+                .attr('text-anchor', 'middle')
+                .attr('opacity', 0)
+            
+            
+            myGroups.on('mouseenter', function(){
+                    
+                d3.select(this)
+                    .select('circle')
+                    .attr('r', 10)
+            })
+          
+        
+        </script>
+    </body>
+    
+</html>

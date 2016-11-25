@@ -1,0 +1,63 @@
+<html>
+
+    <head>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+    </head>
+    
+    <body>
+        <svg width="400"></svg>
+        
+        <script>
+            
+            console.log( d3.select('svg').attr('width') )
+            
+            d3.csv('athletes_sochi.csv', function(data){
+                
+                
+                var byCountry = d3.nest()
+                    .key(function(d, i){
+                        return d.country
+                    })
+                    .entries(data)
+                
+                console.log(byCountry)
+                
+                byCountry.sort(function(a, b){
+                    return d3.descending(a.values.length, b.values.length)
+                })
+                
+                var min = d3.min(byCountry, function(d, i){
+                    return d.values.length  
+                })
+                
+                var max = d3.max(byCountry, function(d, i){
+                    return d.values.length  
+                })
+                
+                var bar_width = 300 / byCountry.length
+                
+                var myScale = d3.scale.linear()
+                    .domain([min, max])
+                    .range([0, 150])
+                
+                d3.select('svg')
+                    .selectAll('rect')
+                    .data(byCountry)
+                    .enter()
+                    .append('rect')
+                    .attr('width', bar_width-1)
+                    .attr('height', function(d, i){
+                        return myScale(d.values.length)
+                    })
+                    .attr('x', function(d, i){
+                        return i*bar_width
+                    })
+                
+                
+            })
+        
+        
+        </script>
+    </body>
+
+</html>

@@ -1,0 +1,51 @@
+<html>
+    
+    <head>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+    </head>
+    
+    <body>
+        <svg width="800" height="800"></svg>
+        
+        <script>
+        
+            var myArc = d3.svg.arc()
+                .innerRadius(function(d){
+                    return Math.random()*100   
+                })
+                .outerRadius(function(d){
+                    return 150   
+                })
+            
+            var data = d3.range(10).map(function(){
+                return Math.random()  
+            })
+            
+            console.log(data)
+            
+            var myPie = d3.layout.pie()
+                .value(function(d, i){
+                    return d  
+                })
+            
+            console.log( myPie(data) )
+            
+            var colors = d3.scale.category20()
+            
+            d3.select('svg')
+                .append('g')
+                //.attr('transform', 'translate(100,100)')
+                .selectAll('path')
+                .data(myPie(data))
+                .enter()
+                .append('path')
+                .attr('d', function(d, i){
+                    return myArc(d)
+                })
+                .attr('fill', function(d, i){
+                    return colors(i)
+                })
+        
+        </script>
+    </body>
+</html>

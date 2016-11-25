@@ -1,0 +1,39 @@
+<html>
+
+    <head>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+    </head>
+    
+    <body>
+        <svg></svg>
+        
+        
+        <script>
+            
+            var dataset = [{age:3}, {age:32}, {age:13}, {age:5}, {age:6}]
+            
+            dataset.sort(function(a, b){
+                return d3.descending(a.age, b.age)    
+            })
+            
+            var newData = dataset.filter(function(d){
+                return parseInt(d.age) < 10
+            })
+            
+            d3.select('svg')
+                .selectAll('rect')
+                .data(newData)
+                .enter()
+                .append('rect')
+                .attr('width', 5)
+                .attr('height', function(d, i){
+                    return d.age
+                })
+                .attr('x', function(d, i){
+                    return i*6
+                })
+            
+        </script>
+    </body>
+    
+</html>

@@ -1,0 +1,44 @@
+<html>
+
+    <head>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+    </head>
+    
+    <body>
+        <svg width="2000"></svg>
+        
+        
+        <script>
+            
+            d3.csv('athletes_sochi.csv', function(data){
+                
+                
+                data.sort(function(a, b){
+                    return d3.descending(a.weight, b.weight)  
+                })
+                
+                var youth = data.filter(function(d){
+                    return parseInt(d.age) < 18  
+                })
+
+                console.log(youth)
+
+                d3.select('svg')
+                    .selectAll('rect')
+                    .data(youth)
+                    .enter()
+                    .append('rect')
+                    .attr('width', 4)
+                    .attr('height', function(d, i){
+                        return d.weight
+                    })
+                    .attr('x', function(d, i){
+                        return i*5
+                    })
+                
+            })
+            
+        </script>
+    </body>
+    
+</html>

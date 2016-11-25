@@ -1,0 +1,71 @@
+<html>
+
+    <head>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+    </head>
+
+    <body>
+        <svg></svg>
+        
+        
+        
+        <script>
+            
+            
+            var mapx = d3.scale.linear()
+                .domain([0, 20])
+                .range([0, 300])
+            
+            var mapy = d3.scale.linear()
+                .domain([0, 1])
+                .range([0, 50])
+            
+            var genline = d3.svg.area()
+                            .x(function(d, i){
+                                return mapx(i)
+                            })
+                            .y1(function(d, i){
+                                return mapy(d)
+                            })
+                            .y0(function(d, i){
+                                return 150  
+                            })
+                            .interpolate('basis')
+            
+            
+            
+            var myPath = d3.select('svg')
+                    .append('path')
+            
+            function draw(data){
+            
+                myPath.transition()
+                    .attr('d', genline(data))
+                    //.attr('fill', 'none')
+                    //.attr('stroke', 'purple')
+                
+            }
+            
+            d3.select('svg').on('click', function(){
+                
+                var data = d3.range(20).map(function(){
+                    return Math.random()    
+                })
+                
+                var maxVal = d3.max(data, function(d, i){
+                    return d
+                })
+                console.log(maxVal)
+                                    
+                draw(data)  
+            })
+                
+        
+        </script>
+    
+        
+        
+    </body>
+    
+    
+</html>

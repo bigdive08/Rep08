@@ -1,0 +1,96 @@
+<html>
+
+    <head>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+    </head>
+
+    <body>
+        
+        <svg id="miosvg" width="500" height="300">
+            <!--
+            <rect width="40" height="80" y="30"></rect>
+            <rect width="40" height="50" fill="orange" y="60" x="45"></rect>
+            <rect x="90" width="40" height="100" y="10"></rect>
+            -->
+        </svg>
+        
+        <script>
+            
+            d3.select('#miosvg')
+                .attr('width', 500)
+                .attr('height', 500)
+            
+            d3.select('svg')
+                .append('rect')
+                .attr('width', 40)
+                .attr('height', 0)
+                .attr('y', 110)
+                .transition()
+                .duration(2000)
+                .ease('bounce')
+                .attr('height', 80)
+                .attr('y', 30)
+                
+            
+            var myRect = d3.select('svg')
+                .append('rect')
+                .attr('width', 40)
+                .attr('height', 50)
+                .attr('stroke', 'red')
+                .attr('stroke-width', 4)
+                .attr('y', 60)
+                .attr('x', 45)
+            
+            myRect.transition()
+                .duration(2000)
+                .delay(500)
+                .ease('elastic')
+                .attr('height', 50)
+                .attr('y', 60)
+                .attr('fill', 'orange')
+                
+            myRect.on('mousedown', function(){
+                    
+                    d3.select(this)
+                        .attr('fill', 'blue')
+                    
+                })
+            
+            myRect.on('mouseup', function(){
+                    
+                    d3.select(this)
+                        .attr('fill', 'orange')
+                    
+                })
+            
+            myRect.on('mouseenter', function(){
+                    
+                    d3.select(this)
+                        .attr('fill', 'green')
+                    
+                })
+            
+            myRect.on('mouseleave', function(){
+                    
+                    d3.select(this)
+                        .attr('fill', 'orange')
+                    
+                })
+            
+            d3.select('svg')
+                .append('rect')
+                .attr('width', 40)
+                .attr('height', 0)
+                .attr('y', 110)
+                .attr('x', 90)
+                .transition()
+                .duration(2000)
+                .delay(1000)
+                .attr('height', 100)
+                .attr('y', 10)
+        
+        </script>
+    
+    </body>
+    
+</html>

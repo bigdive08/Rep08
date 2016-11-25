@@ -1,0 +1,33 @@
+<html>
+
+    <head>
+        <link rel="stylesheet" href="c3.min.css" type="text/css" />
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        <script src="c3.min.js"></script>
+    </head>
+    
+    <body>
+    
+        <div id="c"></div>
+        
+        
+        <script>
+        
+            var data = d3.range(30).map(function(d){
+                return Math.random()  
+            })
+
+            var chart = c3.generate({
+                bindto:'#c',
+                data:{
+                    columns:[
+                        ['aa'].concat(data)
+                    ]
+                }
+            })
+        
+        
+        </script>
+    </body>
+
+</html>

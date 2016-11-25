@@ -1,0 +1,61 @@
+<html>
+
+    <head>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+    </head>
+    
+    <body>
+        <svg></svg>
+        
+        <script>
+        
+            
+            d3.csv('athletes_sochi.csv', function(data){
+                
+                
+                var byCountry = d3.nest()
+                    .key(function(d, i){
+                        return d.country
+                    })
+                    .key(function(d, i){
+                        return d.age
+                    })
+                    .rollup(function(d){
+                        return {
+                            female:10,
+                            male:30,
+                            gender:[10, 30]
+                        }
+                    })
+                    .entries(data)
+                
+                
+                
+                console.log(byCountry)
+                
+                
+                
+                
+                var groups = d3.select('svg')
+                    .selectAll('g')
+                    .data(byCountry)
+                    .enter()
+                    .append('g')
+                   
+                groups.append('circle')
+                
+                groups.append('g')
+                    .selectAll('path')
+                    .data(function(d, i){
+                        return d.values.gender
+                    })
+                    .enter()
+                    .append('path')
+                
+            })
+        
+        
+        </script>
+    </body>
+
+</html>
